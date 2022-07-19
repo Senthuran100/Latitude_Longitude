@@ -7,9 +7,9 @@ Find the Median, Minimum and Maximum of Download and Upload Column.
 def group_same_location():
     try:
         df = pd.read_csv(r'DataRatev2.csv')
-        sameLocationDF =df.groupby(['Longitude','Latitude']).agg({'Download': ['median', 'min', 'max'],'Upload':['median','min','max']})
-        sameLocationDF.columns = ['Download Median', 'Download Minimum', 'Download Maximum','Upload Median', 'Upload Minimum', 'Upload Maximum']
-        sameLocationDF = sameLocationDF.reset_index()
+        locationDF =df.groupby(['Longitude','Latitude']).agg({'Download': ['median', 'min', 'max'],'Upload':['median','min','max']})
+        locationDF.columns = ['Download Median', 'Download Minimum', 'Download Maximum','Upload Median', 'Upload Minimum', 'Upload Maximum']
+        sameLocationDF = locationDF.reset_index()
         return sameLocationDF
     except FileNotFoundError:
         print("File does not exist")
