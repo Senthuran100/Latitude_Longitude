@@ -4,34 +4,31 @@ import pandas as pd
 Used to find the same location.
 Same location is when latitude and longitude is same.
 """
-def find_same_location():
+def group_same_location():
     try:
         df = pd.read_csv(r'DataRatev2.csv')
-        sameLocationDF = df[df[['Longitude', 'Latitude']].nunique(axis=1) == 1]
+        sameLocationDF =df.groupby(['Longitude','Latitude']).agg({'Download': ['mean', 'min', 'max'],'Upload':['mean','min','max']})
+        sameLocationDF.columns = ['Download Mean', 'Download Min', 'Download Max','Upload Mean', 'Upload Min', 'Upload Max']
+        sameLocationDF = sameLocationDF.reset_index()
         return sameLocationDF
     except FileNotFoundError:
         print("File does not exist")
     except:
-        print("Error in opening the file")
+        print("Exception occured.")
 
 """
 Calculate the maximum, minimum and median value of download and Upload.
 Save the result into a csv file.
 """
-def calculate_save_csv_file():
-    df = find_same_location()
+def save_csv_file():
+    df = group_same_location()
     if df.empty:
-        print("CSV doesn't consist of the same location")
+        print("No processed Data. Try with proper data format")
         return
     else:
-        col_names = ['Maximum', 'Minimum', 'Median']
-        data_df = pd.DataFrame(columns=col_names)
-        data_df['Maximum'] = df[['Download', 'Upload']].values.max(1)
-        data_df['Minimum'] = df[['Download', 'Upload']].values.min(1)
-        data_df['Median'] = df[['Download', 'Upload']].values.mean(1)
-        data_df.to_csv('output.csv', index=None, header=True)
-        print(data_df)
+        df.to_csv('output.csv', index=None, header=True)
+        print(df)
 
 
 if __name__ == '__main__':
-    calculate_save_csv_file()
+    save_csv_file()
