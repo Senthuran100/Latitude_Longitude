@@ -2,13 +2,13 @@ import pandas as pd
 
 """
 Group the location based on the Longitude and Latitude.
-Find the Mean, Minimum and Maximum of Download and Upload Column.
+Find the Median, Minimum and Maximum of Download and Upload Column.
 """
 def group_same_location():
     try:
         df = pd.read_csv(r'DataRatev2.csv')
-        sameLocationDF =df.groupby(['Longitude','Latitude']).agg({'Download': ['mean', 'min', 'max'],'Upload':['mean','min','max']})
-        sameLocationDF.columns = ['Download Mean', 'Download Min', 'Download Max','Upload Mean', 'Upload Min', 'Upload Max']
+        sameLocationDF =df.groupby(['Longitude','Latitude']).agg({'Download': ['median', 'min', 'max'],'Upload':['median','min','max']})
+        sameLocationDF.columns = ['Download Median', 'Download Minimum', 'Download Maximum','Upload Median', 'Upload Minimum', 'Upload Maximum']
         sameLocationDF = sameLocationDF.reset_index()
         return sameLocationDF
     except FileNotFoundError:
