@@ -1,8 +1,8 @@
 import pandas as pd
 
 """
-Used to find the same location.
-Same location is when latitude and longitude is same.
+Group the location based on the Longitude and Latitude.
+Find the Mean, Minimum and Maximum of Download and Upload Column.
 """
 def group_same_location():
     try:
@@ -17,7 +17,6 @@ def group_same_location():
         print("Exception occured.")
 
 """
-Calculate the maximum, minimum and median value of download and Upload.
 Save the result into a csv file.
 """
 def save_csv_file():
